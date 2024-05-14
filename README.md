@@ -1,3 +1,3 @@
 # Openshift
 
-Setting up a **Openshift** cluster, wich **Cilium** plugin, and **ArgoCD**.
+Setting up a **Openshift** cluster, wich **Cilium** plugin, **Keycloak** and **ArgoCD**.
