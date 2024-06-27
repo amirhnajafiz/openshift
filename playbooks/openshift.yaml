@@ -1,7 +1,7 @@
 ---
 - name: Install OpenShift Container Platform
   hosts: all
-  become: yes
+  become: true
   tasks:
     - name: Install required packages
       package:
@@ -70,7 +70,7 @@
 
     - name: Disable swap
       command: swapoff -a
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Disable SELinux
       selinux:
