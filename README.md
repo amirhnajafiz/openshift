@@ -12,10 +12,10 @@ In order to setup the cluster, I used an ansible playbook. You can run the playb
 
 ## Run bootstrap
 
-This setup allows you to dynamically set the values in group_vars/all.yml from the shell script, providing flexibility to configure the playbook execution as needed.
+This setup allows you to dynamically set the values in `group_vars/all.yml` from the shell script, providing flexibility to configure the playbook execution as needed.
 
 ```sh
-./botstrap.sh -p /new/path/to/pull-secret.txt -k /new/path/to/ssh-key.pub -b newdomain.com -c new_cluster_name -r new_realm -i new_client_id -s new_client_secret
+./bootstrap.sh -p /new/path/to/pull-secret.txt -k /new/path/to/ssh-key.pub -b newdomain.com -c new_cluster_name -r new_realm -i new_client_id -s new_client_secret
 ```
 
 ### Command-Line Arguments
