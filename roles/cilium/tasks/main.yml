@@ -1,3 +1,6 @@
 ---
-- name: Include Cilium install tasks
+- name: Include install tasks
   include_tasks: install.yml
+
+- name: Configure Hubble
+  include_tasks: configure_hubble.yml
