@@ -39,4 +39,13 @@ Service:
 http://keycloak.<base_domain>
 ```
 
+### Cilium
+
+Hubble UI:
+
+```txt
+http://hubble-ui.<base_domain>
+https://hubble-ui.<base_domain>
+```
+
 Please ensure that your DNS records are correctly set up to resolve these addresses to the appropriate IPs of your OpenShift cluster and that the services are properly exposed. If you have configured custom routes or different namespaces, adjust the addresses accordingly.
