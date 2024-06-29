@@ -6,3 +6,4 @@
     - cilium
     - keycloak
     - oauth
+    - argocd
