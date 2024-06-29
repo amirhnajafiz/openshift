@@ -72,6 +72,7 @@ Service:
 
 ```txt
 http://keycloak.<base_domain>
+https://keycloak.<base_domain>
 ```
 
 ### Cilium

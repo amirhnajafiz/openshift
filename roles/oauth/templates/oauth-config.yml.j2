@@ -8,9 +8,9 @@ spec:
     mappingMethod: claim
     type: OpenID
     openID:
-      clientID: keycloak-client-id
+      clientID: {{ keycloak_client_id }}
       clientSecret:
-        name: keycloak-client-secret
+        name: {{ keycloak_client_secret }}
       claims:
         preferredUsername:
         - preferred_username
