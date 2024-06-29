@@ -32,6 +32,8 @@ This setup allows you to dynamically set the values in `group_vars/all.yml` from
 
 #### Variables
 
+Ensure you replace the placeholders with your actual configuration details before running the playbook. This setup ensures that the OpenShift cluster can authenticate users through Keycloak and that the necessary images are pulled from the Red Hat container registry.
+
 - pull_secret_path: This variable specifies the path to the pull secret file required by OpenShift during installation. The pull secret is used to authenticate with Red Hat's container registry to pull the necessary images for the OpenShift components. The value should be the absolute path to the pull secret file on your local machine. You can obtain the pull secret from the Red Hat OpenShift Cluster Manager.
 - keycloak_realm: This variable specifies the name of the Keycloak realm to be used. A realm in Keycloak is a space where you manage objects like users, roles, and groups. Each realm is isolated from other realms.
 - keycloak_client_id: This variable specifies the client ID configured in the Keycloak realm. The client ID is used to identify the application (in this case, OpenShift) to Keycloak. The value should be the client ID you have set up in Keycloak for your OpenShift application. This client ID should have the necessary roles and permissions configured for authentication and authorization purposes.
