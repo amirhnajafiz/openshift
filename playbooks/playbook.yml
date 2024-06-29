@@ -1,0 +1,5 @@
+---
+- name: Install OpenShift Container Platform
+  hosts: all
+  roles:
+    - openshift
