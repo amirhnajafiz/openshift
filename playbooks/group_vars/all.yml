@@ -1,4 +1,5 @@
 ---
+# also reset these values before running the playbook
 pull_secret_path: "/path/to/pull-secret.txt"
 ssh_key_path: "/path/to/ssh-key.pub"
 base_domain: "amirnajafiz.ir"
