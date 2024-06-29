@@ -1,0 +1,9 @@
+---
+- name: Include prerequisites tasks
+  include_tasks: prerequisites.yml
+
+- name: Include install tasks
+  include_tasks: install.yml
+
+- name: Include configure tasks
+  include_tasks: configure.yml
