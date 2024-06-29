@@ -1,0 +1,16 @@
+---
+- name: Enable Hubble
+  command: cilium hubble enable
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+
+- name: Enable Hubble UI
+  command: cilium hubble ui
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
+
+- name: Deploy Hubble UI Service
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'hubble-ui-service.yaml.j2') }}"
+  namespace: cilium
