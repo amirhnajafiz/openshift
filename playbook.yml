@@ -4,3 +4,4 @@
   roles:
     - openshift
     - cilium
+    - keycloak
