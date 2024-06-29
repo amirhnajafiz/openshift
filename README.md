@@ -2,7 +2,33 @@
 
 Setting up an **Openshift** cluster, wich **Cilium** plugin, **Keycloak** and **ArgoCD**.
 
-In order to setup the cluster, I used an ansible playbook. You can run the playbook by running `bootstrap.sh` script. Also, make sure to edit all files in `group_vars` and `inventory` direcotires.
+In order to setup the cluster, I used an ansible playbook. You can run the playbook by running `bootstrap.sh` script. Also, make sure to edit all files in `inventory` direcotires.
+
+## Prerequisites
+
+- Ensure you have Ansible installed on your machine.
+- Make sure you have SSH access to your OpenShift nodes.
+- Obtain the necessary credentials and secrets for your OpenShift and Keycloak setup.
+
+## Run bootstrap
+
+This setup allows you to dynamically set the values in group_vars/all.yml from the shell script, providing flexibility to configure the playbook execution as needed.
+
+```sh
+./botstrap.sh -p /new/path/to/pull-secret.txt -k /new/path/to/ssh-key.pub -b newdomain.com -c new_cluster_name -r new_realm -i new_client_id -s new_client_secret
+```
+
+### Command-Line Arguments
+
+| Argument          | Description                                      | Example                              |
+|-------------------|--------------------------------------------------|--------------------------------------|
+| `-p`              | Path to the pull secret file                     | `/path/to/pull-secret.txt`           |
+| `-k`              | Path to the SSH key file                         | `/path/to/ssh-key.pub`               |
+| `-b`              | Base domain for the cluster                      | `example.com`                        |
+| `-c`              | Cluster name                                     | `my_cluster`                         |
+| `-r`              | Keycloak realm                                   | `my_realm`                           |
+| `-i`              | Keycloak client ID                               | `my_client_id`                       |
+| `-s`              | Keycloak client secret                           | `my_client_secret`                   |
 
 ## Access Points
 
