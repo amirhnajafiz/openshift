@@ -1,0 +1,24 @@
+---
+- name: Download OpenShift installer
+  get_url:
+    url: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.7/openshift-client-linux.tar.gz
+    dest: /tmp/openshift-client-linux.tar.gz
+
+- name: Extract OpenShift installer
+  unarchive:
+    src: /tmp/openshift-client-linux.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+    creates: /usr/local/bin/oc
+
+- name: Download OpenShift install binaries
+  get_url:
+    url: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.7/openshift-install-linux.tar.gz
+    dest: /tmp/openshift-install-linux.tar.gz
+
+- name: Extract OpenShift install binaries
+  unarchive:
+    src: /tmp/openshift-install-linux.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+    creates: /usr/local/bin/openshift-install
