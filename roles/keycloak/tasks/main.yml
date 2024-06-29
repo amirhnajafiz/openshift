@@ -1,0 +1,3 @@
+---
+- name: Include Keycloak install tasks
+  include_tasks: install.yml

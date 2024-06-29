@@ -1,0 +1,21 @@
+---
+- name: Create Keycloak namespace
+  k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: keycloak
+
+- name: Create Keycloak deployment
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'keycloak-deployment.yml.j2') }}"
+  namespace: keycloak
+
+- name: Create Keycloak service
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'keycloak-service.yml.j2') }}"
+  namespace: keycloak
