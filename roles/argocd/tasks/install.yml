@@ -1,0 +1,40 @@
+---
+- name: Create ArgoCD namespace
+  k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: argocd
+
+- name: Install ArgoCD
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'argocd-install.yaml.j2') }}"
+  namespace: argocd
+
+- name: Expose ArgoCD server service
+  k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: argocd-server
+        namespace: argocd
+        annotations:
+          service.beta.openshift.io/serving-cert-secret-name: argocd-server-tls
+      spec:
+        type: LoadBalancer
+        ports:
+        - port: 80
+          targetPort: 8080
+          protocol: TCP
+          name: http
+        - port: 443
+          targetPort: 8080
+          protocol: TCP
+          name: https
+        selector:
+          app: argocd-server
