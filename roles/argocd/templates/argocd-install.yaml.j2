@@ -1,0 +1,201 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: argocd-server
+  namespace: argocd
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: argocd-application-controller
+  namespace: argocd
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: argocd-repo-server
+  namespace: argocd
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: argocd-dex-server
+  namespace: argocd
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-application-controller
+  namespace: argocd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: argocd-application-controller
+  template:
+    metadata:
+      labels:
+        app: argocd-application-controller
+    spec:
+      serviceAccountName: argocd-application-controller
+      containers:
+      - name: argocd-application-controller
+        image: quay.io/argoproj/argocd:v2.1.7
+        command: ["argocd-application-controller"]
+        ports:
+        - containerPort: 8082
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8082
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8082
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-dex-server
+  namespace: argocd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: argocd-dex-server
+  template:
+    metadata:
+      labels:
+        app: argocd-dex-server
+    spec:
+      serviceAccountName: argocd-dex-server
+      containers:
+      - name: argocd-dex-server
+        image: quay.io/dexidp/dex:v2.27.0
+        args: ["dex", "serve", "/shared/dex-config.yaml"]
+        volumeMounts:
+        - name: dex-config
+          mountPath: /shared
+        ports:
+        - containerPort: 5556
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 5556
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 5556
+      volumes:
+      - name: dex-config
+        configMap:
+          name: argocd-dex-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: argocd-dex-server
+  namespace: argocd
+spec:
+  ports:
+  - name: http
+    port: 5556
+    targetPort: 5556
+  selector:
+    app: argocd-dex-server
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-redis
+  namespace: argocd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: argocd-redis
+  template:
+    metadata:
+      labels:
+        app: argocd-redis
+    spec:
+      containers:
+      - name: argocd-redis
+        image: redis:5.0.3
+        command: ["redis-server", "--save", "", "--appendonly", "no", "--maxmemory", "100mb", "--maxmemory-policy", "allkeys-lru"]
+        ports:
+        - containerPort: 6379
+        livenessProbe:
+          tcpSocket:
+            port: 6379
+        readinessProbe:
+          tcpSocket:
+            port: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: argocd-redis
+  namespace: argocd
+spec:
+  ports:
+  - name: argocd-redis
+    port: 6379
+    targetPort: 6379
+  selector:
+    app: argocd-redis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-repo-server
+  namespace: argocd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: argocd-repo-server
+  template:
+    metadata:
+      labels:
+        app: argocd-repo-server
+    spec:
+      serviceAccountName: argocd-repo-server
+      containers:
+      - name: argocd-repo-server
+        image: quay.io/argoproj/argocd:v2.1.7
+        command: ["argocd-repo-server"]
+        ports:
+        - containerPort: 8081
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-server
+  namespace: argocd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: argocd-server
+  template:
+    metadata:
+      labels:
+        app: argocd-server
+    spec:
+      serviceAccountName: argocd-server
+      containers:
+      -
