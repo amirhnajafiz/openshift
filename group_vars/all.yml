@@ -6,3 +6,7 @@ base_domain: "amirnajafiz.ir"
 cluster_name: "your_cluster_name"
 k8s_service_host: "api.your_cluster_name.your_base_domain"
 k8s_service_port: 6443
+keycloak_url: "keycloak.your_base_domain"
+keycloak_realm: "your_realm"
+keycloak_client_id: "your_client_id"
+keycloak_client_secret: "your_client_secret"
