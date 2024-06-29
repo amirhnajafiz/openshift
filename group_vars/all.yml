@@ -1,12 +1,12 @@
 ---
 # also reset these values before running the playbook
-pull_secret_path: "/path/to/pull-secret.txt"
-ssh_key_path: "/path/to/ssh-key.pub"
-base_domain: "amirnajafiz.ir"
-cluster_name: "your_cluster_name"
-k8s_service_host: "api.your_cluster_name.amirnajafiz.ir"
-k8s_service_port: 6443
-keycloak_url: "keycloak.amirnajafiz.ir"
-keycloak_realm: "your_realm"
-keycloak_client_id: "your_client_id"
-keycloak_client_secret: "your_client_secret"
+pull_secret_path: "/path/to/pull-secret.txt"  # Replace with the actual path to your pull secret file
+ssh_key_path: "/path/to/ssh-key.pub"  # Replace with the actual path to your SSH key file
+base_domain: "example.com"  # Replace with your actual base domain
+cluster_name: "my_cluster"  # Replace with your desired cluster name
+k8s_service_host: "api.my_cluster.example.com"  # Constructed from cluster_name and base_domain
+k8s_service_port: 6443  # Default Kubernetes API server port
+keycloak_url: "keycloak.example.com"  # Replace with your Keycloak URL
+keycloak_realm: "my_realm"  # Replace with your Keycloak realm name
+keycloak_client_id: "my_client_id"  # Replace with your Keycloak client ID
+keycloak_client_secret: "my_client_secret"  # Replace with your Keycloak client secret
