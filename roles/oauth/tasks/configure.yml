@@ -1,0 +1,5 @@
+---
+- name: Configure OpenShift to use Keycloak as the identity provider
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'oauth-config.yml.j2') }}"

@@ -1,0 +1,3 @@
+---
+- name: Include OAuth configuration tasks
+  include_tasks: configure.yml
