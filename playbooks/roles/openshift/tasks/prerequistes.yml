@@ -1,0 +1,72 @@
+---
+- name: Install required packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - wget
+    - git
+    - vim
+    - nano
+    - iptables-services
+    - bind-utils
+    - iptables
+    - ntp
+    - ntpdate
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
+
+- name: Enable required repositories
+  yum_repository:
+    name: "{{ item }}"
+    description: "{{ item }}"
+    file: "{{ item }}.repo"
+    state: present
+  with_items:
+    - rhel-7-server-rpms
+    - rhel-7-server-extras-rpms
+    - rhel-7-server-ansible-2.9-rpms
+    - rhel-7-server-ose-4.7-rpms
+
+- name: Install OpenShift prerequisites
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - NetworkManager
+    - bash-completion
+    - cockpit
+    - cockpit-kubernetes
+    - cockpit-ostree
+    - device-mapper
+    - glibc-langpack-en
+    - pigz
+    - python3
+    - python3-pip
+    - python3-setuptools
+    - python3-virtualenv
+    - rsync
+    - tar
+    - unzip
+    - wget
+    - podman
+    - openssl
+    - httpd-tools
+
+- name: Enable required services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - NetworkManager
+    - chronyd
+
+- name: Disable swap
+  command: swapoff -a
+  ignore_errors: true
+
+- name: Disable SELinux
+  selinux:
+    state: disabled
