@@ -1,5 +1,5 @@
 apiVersion: v1
-baseDomain: amirnajafiz.ir
+baseDomain: {{ base_domain }}
 compute:
 - hyperthreading: Enabled
   name: worker
