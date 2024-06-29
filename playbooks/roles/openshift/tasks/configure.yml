@@ -1,0 +1,18 @@
+---
+- name: Create OpenShift install directory
+  file:
+    path: /root/ocp-install
+    state: directory
+
+- name: Generate OpenShift install config
+  template:
+    src: install-config.j2
+    dest: /root/ocp-install/install-config.yaml
+
+- name: Install OpenShift cluster
+  command: >
+    openshift-install create cluster
+    --dir=/root/ocp-install
+    --log-level=info
+  async: 0
+  poll: 0
