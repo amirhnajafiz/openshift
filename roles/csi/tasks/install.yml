@@ -1,0 +1,31 @@
+---
+- name: Create Rook Ceph namespace
+  k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: rook-ceph
+
+- name: Apply Rook Ceph CRDs
+  k8s:
+    state: present
+    src: https://raw.githubusercontent.com/rook/rook/release-1.7/cluster/examples/kubernetes/ceph/crds.yaml
+
+- name: Deploy Rook Operator
+  k8s:
+    state: present
+    src: https://raw.githubusercontent.com/rook/rook/release-1.7/cluster/examples/kubernetes/ceph/operator.yaml
+  namespace: rook-ceph
+
+- name: Create Rook Ceph Cluster
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'rook-ceph-cluster.yaml.j2') }}"
+  namespace: rook-ceph
+
+- name: Create CSI StorageClass
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'csi-storageclass.yaml.j2') }}"
