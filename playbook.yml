@@ -3,6 +3,7 @@
   hosts: all
   roles:
     - openshift
+    - csi
     - cilium
     - keycloak
     - oauth
